@@ -1,14 +1,16 @@
 class AppStrings {
   static const String noRouteFound = "no_route_found";
-  static const String onBoardingTitle1 = "on_boarding_title1";
-  static const String onBoardingTitle2 = "on_boarding_title2";
-  static const String onBoardingTitle3 = "on_boarding_title3";
-  static const String onBoardingTitle4 = "on_boarding_title4";
+  static const String onBoardingTitle1 = "Welcome to BrewMobil";
+  static const String onBoardingTitle2 = "Explore Coffee Varieties";
+  static const String onBoardingTitle3 = "Order with Ease";
+  static const String onBoardingTitle4 = "Enjoy Fresh Brews";
 
-  static const String onBoardingSubTitle1 = "on_boarding_desc1";
-  static const String onBoardingSubTitle2 = "on_boarding_desc2";
-  static const String onBoardingSubTitle3 = "on_boarding_desc3";
-  static const String onBoardingSubTitle4 = "on_boarding_desc4";
+  static const String onBoardingSubTitle1 = "Your Coffee, Your Way";
+  static const String onBoardingSubTitle2 = "Discover a World of Flavors";
+  static const String onBoardingSubTitle3 =
+      "Convenient Coffee Ordering at Your Fingertips";
+  static const String onBoardingSubTitle4 =
+      "Savor Every Sip, Delivered to Your Doorstep";
   static const String skip = "skip";
   static const String username = "username_hint";
   static const String mobileNumber = "mobile_number_hint";

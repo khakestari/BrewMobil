@@ -8,7 +8,7 @@ class ColorManager {
   static Color primaryOpacity70 = HexColor.fromHex("#B3865439");
 
   // new colors
-  static Color darkPrimary = HexColor.fromHex("#402218");
+  static Color darkPrimary = HexColor.fromHex("#0c0f14");
   static Color grey1 = HexColor.fromHex("#707070");
   static Color grey2 = HexColor.fromHex("#797979");
   static Color white = HexColor.fromHex("#FFFFFF");
