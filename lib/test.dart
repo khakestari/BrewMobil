@@ -1,5 +1,6 @@
-import 'package:advanced_shop_app/app/app.dart';
 import 'package:flutter/material.dart';
+
+import './app/app.dart';
 
 class Test extends StatelessWidget {
   const Test({super.key});

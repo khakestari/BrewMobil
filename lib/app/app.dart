@@ -4,10 +4,11 @@ import '../presentation/resources/theme_manager.dart';
 import '../presentation/resources/routes_manager.dart';
 
 class MyApp extends StatefulWidget {
-  MyApp._internal();
+  MyApp._internal(); // private constructoe
   int appState = 0;
-  static final MyApp instance = MyApp._internal();
-  factory MyApp() => instance;
+  static final MyApp instance =
+      MyApp._internal(); // we have inly a single instance
+  factory MyApp() => instance; // factory for the class instance
   @override
   State<MyApp> createState() => _MyAppState();
 }
