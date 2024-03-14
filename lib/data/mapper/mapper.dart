@@ -1,7 +1,7 @@
 // to convert the response into non nullable object (model)
 import '../../app/extensions.dart';
 
-import '../../domain/model.dart';
+import '../../domain/model/model.dart';
 import '../responses/responses.dart';
 
 const EMPTY = "";

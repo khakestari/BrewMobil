@@ -6,8 +6,8 @@ import '../../data/network/network_info.dart';
 import '../../data/data_source/remote_data_source.dart';
 import '../../data/network/failure.dart';
 import '../../data/request/request.dart';
-import '../../domain/model.dart';
-import '../../domain/repository.dart';
+import '../../domain/model/model.dart';
+import '../../domain/repository/repository.dart';
 
 class RepositoryImplementer extends Repository {
   RemoteDataSource _remoteDataSource;
