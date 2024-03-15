@@ -48,6 +48,7 @@ dependencies:
   shared_preferences: ^2.2.2
   device_info_plus: ^9.1.2
   android_id: ^0.3.6
+  freezed: ^2.4.7
 
 dev_dependencies:
   flutter_test:
