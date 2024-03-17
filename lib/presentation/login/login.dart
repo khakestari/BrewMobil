@@ -3,6 +3,7 @@ import 'package:advanced_shop_app/presentation/resources/strings_manager.dart';
 import 'package:advanced_shop_app/presentation/resources/values_manager.dart';
 import 'package:flutter/material.dart';
 import '../resources/assets_manager.dart';
+import '../resources/routes_manager.dart';
 import './login_viewmodel.dart';
 
 class LoginView extends StatefulWidget {
@@ -35,14 +36,15 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
-    return Placeholder();
+    return _getContentWidget();
   }
 
   Widget _getContentWidget() {
     return Scaffold(
+      backgroundColor: ColorManager.darkPrimary,
       body: Container(
         padding: EdgeInsets.only(top: AppPadding.p100),
-        color: ColorManager.black,
+        color: ColorManager.darkPrimary,
         child: SingleChildScrollView(
           child: Form(
             key: _formKey,
@@ -100,16 +102,52 @@ class _LoginViewState extends State<LoginView> {
                     right: AppPadding.p28,
                   ),
                   child: StreamBuilder<bool>(
-                      stream: _viewModel.outputIsAllInputsValid,
-                      builder: (context, snapshot) {
-                        return ElevatedButton(
+                    stream: _viewModel.outputIsAllInputsValid,
+                    builder: (context, snapshot) {
+                      return SizedBox(
+                        width: double.infinity,
+                        height: AppSize.s40,
+                        child: ElevatedButton(
                             onPressed: (snapshot.data ?? false)
                                 ? () {
                                     _viewModel.login();
                                   }
                                 : null,
-                            child: const Text(AppStrings.login));
-                      }),
+                            child: const Text(AppStrings.login)),
+                      );
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                      top: AppPadding.p8,
+                      left: AppPadding.p28,
+                      right: AppPadding.p28),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pushReplacementNamed(
+                              context, Routes.forgotPasswordRoute);
+                        },
+                        child: Text(
+                          AppStrings.forgetPassword,
+                          style: Theme.of(context).textTheme.titleSmall,
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pushReplacementNamed(
+                              context, Routes.registerRoute);
+                        },
+                        child: Text(
+                          AppStrings.registerText,
+                          style: Theme.of(context).textTheme.titleSmall,
+                        ),
+                      ),
+                    ],
+                  ),
                 )
               ],
             ),
