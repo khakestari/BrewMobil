@@ -1,3 +1,4 @@
+import 'package:advanced_shop_app/app/di.dart';
 import 'package:advanced_shop_app/presentation/resources/color_manager.dart';
 import 'package:advanced_shop_app/presentation/resources/strings_manager.dart';
 import 'package:advanced_shop_app/presentation/resources/values_manager.dart';
@@ -14,7 +15,7 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
-  LoginViewModel _viewModel = LoginViewModel(null);
+  LoginViewModel _viewModel = instance<LoginViewModel>();
 
   TextEditingController _userNameController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
