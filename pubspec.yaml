@@ -50,6 +50,7 @@ dependencies:
   android_id: ^0.3.6
   freezed: ^2.4.7
   get_it: ^7.6.7
+  lottie: ^3.1.0
 
 dev_dependencies:
   flutter_test:
@@ -86,6 +87,10 @@ flutter:
     - assets/images/left_arrow_ic.svg
     - assets/images/solid_circle_ic.svg
     - assets/images/hollow_circle_ic.svg
+    - assets/json/empty.json
+    - assets/json/error.json
+    - assets/json/loading.json
+    
     
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
