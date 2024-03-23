@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_final_fields
+
 import 'dart:async';
 
 import 'package:advanced_shop_app/presentation/common/state_renderer/state_renderer.dart';
@@ -16,6 +18,9 @@ class LoginViewModel extends BaseViewModel
   StreamController _isAllInputsValidStreamController =
       StreamController<void>.broadcast();
 
+  StreamController isUserLoggedInSuccessfullyStreamController =
+      StreamController<String>();
+
   var loginObject = LoginObject("", "");
 
   LoginUseCase _loginUseCase;
@@ -26,6 +31,7 @@ class LoginViewModel extends BaseViewModel
     _userNameStreamController.close();
     _passwordStreamController.close();
     _isAllInputsValidStreamController.close();
+    isUserLoggedInSuccessfullyStreamController.close();
   }
 
   @override
@@ -54,13 +60,13 @@ class LoginViewModel extends BaseViewModel
                   // left -> failure
                   inputState.add(ErrorState(
                       StateRendererType.POPUP_ERROR_STATE, failure.message))
-                },
-            (data) => {
-                  // right -> success (data)
-                  inputState.add(ContentState())
-                  // navigate to main screen after the login
-                  // print(data.customer?.name)
-                });
+                }, (data) {
+      // right -> success (data)
+      inputState.add(ContentState());
+      // navigate to main screen after the login
+      // print(data.customer?.name)
+      isUserLoggedInSuccessfullyStreamController.add("1234567");
+    });
   }
 
   @override

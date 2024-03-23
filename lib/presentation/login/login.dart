@@ -1,9 +1,11 @@
+import 'package:advanced_shop_app/app/app_prefs.dart';
 import 'package:advanced_shop_app/app/di.dart';
 import 'package:advanced_shop_app/presentation/common/state_renderer/state_renderer_impleneter.dart';
 import 'package:advanced_shop_app/presentation/resources/color_manager.dart';
 import 'package:advanced_shop_app/presentation/resources/strings_manager.dart';
 import 'package:advanced_shop_app/presentation/resources/values_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import '../resources/assets_manager.dart';
 import '../resources/routes_manager.dart';
 import './login_viewmodel.dart';
@@ -17,6 +19,7 @@ class LoginView extends StatefulWidget {
 
 class _LoginViewState extends State<LoginView> {
   LoginViewModel _viewModel = instance<LoginViewModel>();
+  AppPreferences _appPreferences = instance<AppPreferences>();
 
   TextEditingController _userNameController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
@@ -28,6 +31,14 @@ class _LoginViewState extends State<LoginView> {
         .addListener(() => _viewModel.setUserName(_userNameController.text));
     _passwordController
         .addListener(() => _viewModel.setPassword(_passwordController.text));
+    _viewModel.isUserLoggedInSuccessfullyStreamController.stream
+        .listen((isSuccessLoggedIn) {
+      // navigate to main screen
+      SchedulerBinding.instance.addPostFrameCallback((_) {
+        _appPreferences.setIsUserLoggedIn();
+        Navigator.of(context).pushReplacementNamed(Routes.mainRoute);
+      });
+    });
   }
 
   @override

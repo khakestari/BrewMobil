@@ -1,7 +1,8 @@
 import 'dart:ui';
 
+import 'package:advanced_shop_app/app/app_prefs.dart';
+import 'package:advanced_shop_app/app/di.dart';
 import 'package:advanced_shop_app/presentation/onboarding/onboarding_viewmodel.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -23,8 +24,10 @@ class OnBoardingView extends StatefulWidget {
 class _OnBoardingViewState extends State<OnBoardingView> {
   PageController _pageController = PageController(initialPage: 0);
   OnBoardingViewModel _viewModel = OnBoardingViewModel();
+  AppPreferences _appPreferences = instance<AppPreferences>();
 
   _bind() {
+    _appPreferences.setOnBoardingScreenViewed();
     _viewModel.start();
   }
 
