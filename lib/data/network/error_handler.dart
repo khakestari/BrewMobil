@@ -1,6 +1,5 @@
 // ignore_for_file: constant_identifier_names
 
-import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 
 import '../../data/network/failure.dart';
