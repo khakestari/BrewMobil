@@ -4,6 +4,7 @@ import '../../app/extensions.dart';
 import '../../domain/model/model.dart';
 import '../responses/responses.dart';
 
+// mapper use to convert responses to domain models
 const EMPTY = "";
 const ZERO = 0;
 
@@ -33,5 +34,11 @@ extension AuthenticationResponseMapper on AuthenticationResponse? {
       this?.customer?.toDomain(),
       this?.contacts?.toDomain(),
     );
+  }
+}
+
+extension ForgotPasswordResponseMapper on ForgotPasswordResponse? {
+  String toDomain() {
+    return this?.support?.orEmpty() ?? EMPTY;
   }
 }

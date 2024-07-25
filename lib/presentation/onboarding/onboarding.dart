@@ -40,7 +40,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<SliderViewObject>(
-        stream: _viewModel.outputSliderObject,
+        stream: _viewModel.outputSliderViewObject,
         builder: (context, snapshot) {
           return _getContentWidget(snapshot.data);
         });

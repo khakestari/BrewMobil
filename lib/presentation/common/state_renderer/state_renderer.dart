@@ -11,14 +11,15 @@ import '../../../presentation/resources/styles_manager.dart';
 import '../../../presentation/resources/values_manager.dart';
 
 enum StateRendererType {
-// POPUP STATES
+  // POPUP STATES
   POPUP_LOADING_STATE,
   POPUP_ERROR_STATE,
-// FULL SCREEN STATES
+
+  // FULL SCREEN STATES
   FULL_SCREEN_LOADING_STATE,
   FULL_SCREEN_ERROR_STATE,
   CONTENT_SCREEN_STATE, // THE UI OF THE SCREEN
-  EMPTY_SCREEN_STATE, // EMPTY VIEW WHEN WE RECIEVE NO DATA FROM API SIDE FOR LIST SCREEN
+  EMPTY_SCREEN_STATE // EMPTY VIEW WHEN WE RECEIVE NO DATA FROM API SIDE FOR LIST SCREEN
 }
 
 class StateRenderer extends StatelessWidget {
@@ -26,13 +27,14 @@ class StateRenderer extends StatelessWidget {
   String message;
   String title;
   Function? retryActionFunction;
-  StateRenderer({
-    Key? key,
-    required this.stateRendererType,
-    String? message,
-    String? title,
-    required this.retryActionFunction,
-  })  : message = message ?? AppStrings.loading,
+
+  StateRenderer(
+      {Key? key,
+      required this.stateRendererType,
+      String? message,
+      String? title,
+      required this.retryActionFunction})
+      : message = message ?? AppStrings.loading,
         title = title ?? EMPTY,
         super(key: key);
 
@@ -50,7 +52,7 @@ class StateRenderer extends StatelessWidget {
         return _getPopUpDialog(context, [
           _getAnimatedImage(JsonAssets.error),
           _getMessage(message),
-          _getRetryButton(AppStrings.ok, context),
+          _getRetryButton(AppStrings.ok, context)
         ]);
       case StateRendererType.FULL_SCREEN_LOADING_STATE:
         return _getItemsInColumn(
@@ -59,7 +61,7 @@ class StateRenderer extends StatelessWidget {
         return _getItemsInColumn([
           _getAnimatedImage(JsonAssets.error),
           _getMessage(message),
-          _getRetryButton(AppStrings.retry_again, context),
+          _getRetryButton(AppStrings.retry_again, context)
         ]);
       case StateRendererType.CONTENT_SCREEN_STATE:
         return Container();
@@ -79,17 +81,15 @@ class StateRenderer extends StatelessWidget {
       backgroundColor: Colors.transparent,
       child: Container(
         decoration: BoxDecoration(
-          color: ColorManager.white,
-          shape: BoxShape.rectangle,
-          borderRadius: BorderRadius.circular(AppSize.s14),
-          boxShadow: const [
-            BoxShadow(
-              color: Colors.black26,
-              blurRadius: AppSize.s12,
-              offset: Offset(AppSize.s0, AppSize.s12),
-            )
-          ],
-        ),
+            color: ColorManager.white,
+            shape: BoxShape.rectangle,
+            borderRadius: BorderRadius.circular(AppSize.s14),
+            boxShadow: [
+              BoxShadow(
+                  color: Colors.black26,
+                  blurRadius: AppSize.s12,
+                  offset: Offset(AppSize.s0, AppSize.s12))
+            ]),
         child: _getDialogContent(context, children),
       ),
     );
@@ -106,9 +106,10 @@ class StateRenderer extends StatelessWidget {
 
   Widget _getAnimatedImage(String animationName) {
     return SizedBox(
-        height: AppSize.s100,
-        width: AppSize.s100,
-        child: Lottie.asset(animationName));
+      height: AppSize.s100,
+      width: AppSize.s100,
+      child: Lottie.asset(animationName),
+    );
   }
 
   Widget _getMessage(String message) {
@@ -117,8 +118,8 @@ class StateRenderer extends StatelessWidget {
         padding: const EdgeInsets.all(AppPadding.p18),
         child: Text(
           message,
-          style: getMediumStyle(
-              color: ColorManager.darkGrey, fontSize: FontSize.s16),
+          style:
+              getMediumStyle(color: ColorManager.black, fontSize: FontSize.s16),
         ),
       ),
     );
@@ -135,8 +136,9 @@ class StateRenderer extends StatelessWidget {
                 if (stateRendererType ==
                     StateRendererType.FULL_SCREEN_ERROR_STATE) {
                   retryActionFunction
-                      ?.call(); // to call the api function again to retry
+                      ?.call(); // to call the API function again to retry
                 } else {
+                  print("line 141 pop");
                   Navigator.of(context)
                       .pop(); // popup state error so we need to dismiss the dialog
                 }

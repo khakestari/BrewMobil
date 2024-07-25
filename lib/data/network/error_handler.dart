@@ -3,6 +3,7 @@
 import 'package:dio/dio.dart';
 
 import '../../data/network/failure.dart';
+import '../../presentation/resources/strings_manager.dart';
 
 enum DataSource {
   SUCCESS,
@@ -14,7 +15,7 @@ enum DataSource {
   INTERNAL_SERVER_ERROR,
   CONNECT_TIMEOUT,
   CANCEL,
-  RECIEVE_TIMEOUT,
+  RECEIVE_TIMEOUT,
   SEND_TIMEOUT,
   CACHE_ERROR,
   NO_INTERNET_CONNECTION,
@@ -40,7 +41,7 @@ class ErrorHandler implements Exception {
       case DioExceptionType.sendTimeout:
         return DataSource.SEND_TIMEOUT.getFailure();
       case DioExceptionType.receiveTimeout:
-        return DataSource.RECIEVE_TIMEOUT.getFailure();
+        return DataSource.RECEIVE_TIMEOUT.getFailure();
       case DioExceptionType.badResponse:
         switch (error.response?.statusCode) {
           case ResponseCode.BAD_REQUEST:
@@ -58,8 +59,8 @@ class ErrorHandler implements Exception {
         }
       case DioExceptionType.cancel:
         return DataSource.CANCEL.getFailure();
-      case DioExceptionType.unknown:
-        return DataSource.DEFAULT.getFailure();
+      // case DioExceptionType.unknown:
+      //   return DataSource.DEFAULT.getFailure();
       default:
         return DataSource.DEFAULT.getFailure();
     }
@@ -85,9 +86,9 @@ extension DataSourceExtension on DataSource {
             ResponseCode.CONNECT_TIMEOUT, ResponseMessage.CONNECT_TIMEOUT);
       case DataSource.CANCEL:
         return Failure(ResponseCode.CANCEL, ResponseMessage.CANCEL);
-      case DataSource.RECIEVE_TIMEOUT:
+      case DataSource.RECEIVE_TIMEOUT:
         return Failure(
-            ResponseCode.RECIEVE_TIMEOUT, ResponseMessage.RECIEVE_TIMEOUT);
+            ResponseCode.RECEIVE_TIMEOUT, ResponseMessage.RECEIVE_TIMEOUT);
       case DataSource.SEND_TIMEOUT:
         return Failure(ResponseCode.SEND_TIMEOUT, ResponseMessage.SEND_TIMEOUT);
       case DataSource.CACHE_ERROR:
@@ -105,19 +106,21 @@ extension DataSourceExtension on DataSource {
 
 class ResponseCode {
   // API status codes
-  static const int SUCCESS = 200;
-  static const int NO_CONTENT = 201;
-  static const int BAD_REQUEST = 400;
-  static const int FORBIDDEN = 403;
-  static const int UNAUTHORISED = 401;
-  static const int NOT_FOUND = 404;
-  static const int INTERNAL_SERVER_ERROR = 500;
+  static const int SUCCESS = 200; // success with data
+  static const int NO_CONTENT = 201; // success with no content
+  static const int BAD_REQUEST = 400; // failure, api rejected the request
+  static const int FORBIDDEN = 403; // failure, api rejected the request
+  static const int UNAUTHORISED = 401; // failure user is not authorised
+  static const int NOT_FOUND =
+      404; // failure, api url is not correct and not found
+  static const int INTERNAL_SERVER_ERROR =
+      500; // failure, crash happened in server side
 
   // local status code
   static const int DEFAULT = -1;
   static const int CONNECT_TIMEOUT = -2;
   static const int CANCEL = -3;
-  static const int RECIEVE_TIMEOUT = -4;
+  static const int RECEIVE_TIMEOUT = -4;
   static const int SEND_TIMEOUT = -5;
   static const int CACHE_ERROR = -6;
   static const int NO_INTERNET_CONNECTION = -7;
@@ -125,23 +128,35 @@ class ResponseCode {
 
 class ResponseMessage {
   // API status message
-  static const String SUCCESS = "success";
-  static const String NO_CONTENT = "no content";
-  static const String BAD_REQUEST = "bad request, try again later";
-  static const String FORBIDDEN = "forbidden request, try again later";
-  static const String UNAUTHORISED = "user is unauthorised, try again later";
-  static const String NOT_FOUND = "url is not found, try again later";
+  static const String SUCCESS = AppStrings.success; // success with data
+  static const String NO_CONTENT =
+      AppStrings.noContent; // success with no content
+  static const String BAD_REQUEST =
+      AppStrings.badRequestError; // failure, api rejected our request
+  static const String FORBIDDEN =
+      AppStrings.forbiddenError; // failure,  api rejected our request
+  static const String UNAUTHORISED =
+      AppStrings.unauthorizedError; // failure, user is not authorised
+  static const String NOT_FOUND = AppStrings
+      .notFoundError; // failure, API url is not correct and not found in api side.
   static const String INTERNAL_SERVER_ERROR =
-      "something went wrong, try again later";
-  // local status message
-  static const String DEFAULT = "something went wrong, try again later";
-  static const String CONNECT_TIMEOUT = "time out error, try again later";
-  static const String CANCEL = "request was cancelled, try again later";
-  static const String RECIEVE_TIMEOUT = "time out error, try again later";
-  static const String SEND_TIMEOUT = "time out error, try again later";
-  static const String CACHE_ERROR = "cache error, try again later";
+      AppStrings.internalServerError; // failure, a crash happened in API side.
+
+  // local responses codes
+  static const String DEFAULT =
+      AppStrings.defaultError; // unknown error happened
+  static const String CONNECT_TIMEOUT =
+      AppStrings.timeoutError; // issue in connectivity
+  static const String CANCEL =
+      AppStrings.defaultError; // API request was cancelled
+  static const String RECEIVE_TIMEOUT =
+      AppStrings.timeoutError; //  issue in connectivity
+  static const String SEND_TIMEOUT =
+      AppStrings.timeoutError; //  issue in connectivity
+  static const String CACHE_ERROR = AppStrings
+      .defaultError; //  issue in getting data from local data source (cache)
   static const String NO_INTERNET_CONNECTION =
-      "please check your internet connection";
+      AppStrings.noInternetError; // issue in connectivity
 }
 
 class ApiInternalStatus {

@@ -12,7 +12,7 @@ extension NonNullString on String? {
   }
 }
 
-// extentsion on integer
+// extension on integer
 
 extension NonNullInteger on int? {
   int orZero() {

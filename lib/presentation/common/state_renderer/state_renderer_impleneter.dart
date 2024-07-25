@@ -7,11 +7,10 @@ import './state_renderer.dart';
 
 abstract class FlowState {
   StateRendererType getStateRendererType();
-  String getmessage();
+  String getMessage();
 }
 
-// Loading State(POPUP, FULL SCREEN)
-
+// Loading State (POPUP, FULL SCREEN)
 class LoadingState extends FlowState {
   StateRendererType stateRendererType;
   String message;
@@ -20,13 +19,13 @@ class LoadingState extends FlowState {
       : message = message ?? AppStrings.loading;
 
   @override
-  StateRendererType getStateRendererType() => stateRendererType;
+  String getMessage() => message;
+
   @override
-  String getmessage() => message;
+  StateRendererType getStateRendererType() => stateRendererType;
 }
 
-// Error State (POPUP, FULL LOADING)
-
+// error state (POPUP, FULL LOADING)
 class ErrorState extends FlowState {
   StateRendererType stateRendererType;
   String message;
@@ -34,34 +33,38 @@ class ErrorState extends FlowState {
   ErrorState(this.stateRendererType, this.message);
 
   @override
-  StateRendererType getStateRendererType() => stateRendererType;
+  String getMessage() => message;
+
   @override
-  String getmessage() => message;
+  StateRendererType getStateRendererType() => stateRendererType;
 }
 
-// Content State
+// CONTENT STATE
 
 class ContentState extends FlowState {
   ContentState();
 
   @override
+  String getMessage() => EMPTY;
+
+  @override
   StateRendererType getStateRendererType() =>
       StateRendererType.CONTENT_SCREEN_STATE;
-  @override
-  String getmessage() => EMPTY;
 }
 
-// Empty State
+// EMPTY STATE
 
 class EmptyState extends FlowState {
   String message;
+
   EmptyState(this.message);
+
+  @override
+  String getMessage() => message;
 
   @override
   StateRendererType getStateRendererType() =>
       StateRendererType.EMPTY_SCREEN_STATE;
-  @override
-  String getmessage() => message;
 }
 
 extension FlowStateExtension on FlowState {
@@ -70,35 +73,37 @@ extension FlowStateExtension on FlowState {
     switch (this.runtimeType) {
       case LoadingState:
         {
+          print("76");
+          print(this.runtimeType);
           if (getStateRendererType() == StateRendererType.POPUP_LOADING_STATE) {
             // showing popup dialog
-            showPopUp(context, getStateRendererType(), getmessage());
-            //return content ui of the screen
+            showPopUp(context, getStateRendererType(), getMessage());
+            // return the content ui of the screen
             return contentScreenWidget;
           } else // StateRendererType.FULL_SCREEN_LOADING_STATE
           {
             return StateRenderer(
-              stateRendererType: getStateRendererType(),
-              message: getmessage(),
-              retryActionFunction: retryActionFunction,
-            );
+                stateRendererType: getStateRendererType(),
+                message: getMessage(),
+                retryActionFunction: retryActionFunction);
           }
         }
       case ErrorState:
         {
+          print("93");
+          print(this.runtimeType);
           dismissDialog(context);
           if (getStateRendererType() == StateRendererType.POPUP_ERROR_STATE) {
             // showing popup dialog
-            showPopUp(context, getStateRendererType(), getmessage());
-            //return content ui of the screen
+            showPopUp(context, getStateRendererType(), getMessage());
+            // return the content ui of the screen
             return contentScreenWidget;
           } else // StateRendererType.FULL_SCREEN_ERROR_STATE
           {
             return StateRenderer(
-              stateRendererType: getStateRendererType(),
-              message: getmessage(),
-              retryActionFunction: retryActionFunction,
-            );
+                stateRendererType: getStateRendererType(),
+                message: getMessage(),
+                retryActionFunction: retryActionFunction);
           }
         }
       case ContentState:
@@ -107,12 +112,16 @@ extension FlowStateExtension on FlowState {
           return contentScreenWidget;
         }
       case EmptyState:
-        return StateRenderer(
-            stateRendererType: getStateRendererType(),
-            message: getmessage(),
-            retryActionFunction: () {});
+        {
+          return StateRenderer(
+              stateRendererType: getStateRendererType(),
+              message: getMessage(),
+              retryActionFunction: retryActionFunction);
+        }
       default:
-        return contentScreenWidget;
+        {
+          return contentScreenWidget;
+        }
     }
   }
 

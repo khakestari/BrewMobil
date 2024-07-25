@@ -1,6 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 part 'responses.g.dart';
 
+// The @JsonSerializable() annotation indicates that this class should have JSON serialization logic generated.
 @JsonSerializable()
 class BaseResponse {
   @JsonKey(name: "status")
@@ -39,6 +40,9 @@ class ContactsResponse {
 
   ContactsResponse(this.email, this.phone, this.link);
 
+  /* methods used for JSON deserialization and serialization, 
+  respectively. The actual implementation of these methods is generated in the responses.g.dart file. */
+
   // from json
   factory ContactsResponse.fromJson(Map<String, dynamic> json) =>
       _$ContactsResponseFromJson(json);
@@ -62,4 +66,18 @@ class AuthenticationResponse extends BaseResponse {
 
   // to json
   Map<String, dynamic> toJson() => _$AuthenticationResponseToJson(this);
+}
+
+@JsonSerializable()
+class ForgotPasswordResponse extends BaseResponse {
+  @JsonKey(name: 'support')
+  String? support;
+
+  ForgotPasswordResponse(this.support);
+  // from json
+  factory ForgotPasswordResponse.fromJson(Map<String, dynamic> json) =>
+      _$ForgotPasswordResponseFromJson(json);
+
+  // to json
+  Map<String, dynamic> toJson() => _$ForgotPasswordResponseToJson(this);
 }

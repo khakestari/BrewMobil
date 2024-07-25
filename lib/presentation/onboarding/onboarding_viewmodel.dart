@@ -1,7 +1,5 @@
 import 'dart:async';
 
-import './onboarding.dart';
-
 import '../../domain/model/model.dart';
 import '../base/baseviewmodel.dart';
 import '../resources/assets_manager.dart';
@@ -59,7 +57,7 @@ class OnBoardingViewModel extends BaseViewModel
 
   // outputs
   @override
-  Stream<SliderViewObject> get outputSliderObject =>
+  Stream<SliderViewObject> get outputSliderViewObject =>
       _streamController.stream.map((sliderViewObject) => sliderViewObject);
 
   // private functions
@@ -93,7 +91,7 @@ abstract class OnBoardingViewModelInputs {
 // outputs mean data or results that will be send from our view model to our view
 abstract class OnBoardingViewModelOutputs {
   // will be implement later
-  Stream<SliderViewObject> get outputSliderObject;
+  Stream<SliderViewObject> get outputSliderViewObject;
 }
 
 class SliderViewObject {
