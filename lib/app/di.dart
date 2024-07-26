@@ -1,3 +1,5 @@
+import 'package:advanced_shop_app/domain/usecase/register_usecase.dart';
+import 'package:advanced_shop_app/presentation/register/register_viewmodel.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -57,5 +59,14 @@ initForgotPasswordModule() {
         () => ForgotPasswordUseCase(instance()));
     instance.registerFactory<ForgotPasswordViewModel>(
         () => ForgotPasswordViewModel(instance()));
+  }
+}
+
+initRegisterModule() {
+  if (!GetIt.I.isRegistered<RegisterUseCase>()) {
+    instance
+        .registerFactory<RegisterUseCase>(() => RegisterUseCase(instance()));
+    instance.registerFactory<RegisterViewmodel>(
+        () => RegisterViewmodel(instance()));
   }
 }
