@@ -1,9 +1,17 @@
+import 'dart:io';
 import 'package:advanced_shop_app/app/di.dart';
+import 'package:advanced_shop_app/data/mapper/mapper.dart';
 import 'package:advanced_shop_app/presentation/common/state_renderer/state_renderer_impleneter.dart';
 import 'package:advanced_shop_app/presentation/register/register_viewmodel.dart';
 import 'package:advanced_shop_app/presentation/resources/color_manager.dart';
 import 'package:advanced_shop_app/presentation/resources/values_manager.dart';
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:image_picker/image_picker.dart';
+
+import '../resources/assets_manager.dart';
+import '../resources/strings_manager.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
@@ -14,15 +22,13 @@ class RegisterView extends StatefulWidget {
 
 class _RegisterViewState extends State<RegisterView> {
   RegisterViewmodel _viewmodel = instance<RegisterViewmodel>();
+  ImagePicker picker = instance<ImagePicker>();
   final _formKey = GlobalKey<FormState>();
 
-  TextEditingController _usernameTextEditingController =
-      TextEditingController();
-  TextEditingController _mobileNumberTextEditingController =
-      TextEditingController();
-  TextEditingController _emailTextEditingController = TextEditingController();
-  TextEditingController _passwordTextEditingController =
-      TextEditingController();
+  TextEditingController _usernameController = TextEditingController();
+  TextEditingController _mobileNumberController = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
 
   @override
   void initState() {
@@ -32,17 +38,17 @@ class _RegisterViewState extends State<RegisterView> {
 
   _bind() {
     _viewmodel.start();
-    _usernameTextEditingController.addListener(() {
-      _viewmodel.setUsername(_usernameTextEditingController.text);
+    _usernameController.addListener(() {
+      _viewmodel.setUsername(_usernameController.text);
     });
-    _passwordTextEditingController.addListener(() {
-      _viewmodel.setPassword(_passwordTextEditingController.text);
+    _passwordController.addListener(() {
+      _viewmodel.setPassword(_passwordController.text);
     });
-    _emailTextEditingController.addListener(() {
-      _viewmodel.setEmail(_emailTextEditingController.text);
+    _emailController.addListener(() {
+      _viewmodel.setEmail(_emailController.text);
     });
-    _mobileNumberTextEditingController.addListener(() {
-      _viewmodel.setmobileNumber(_mobileNumberTextEditingController.text);
+    _mobileNumberController.addListener(() {
+      _viewmodel.setmobileNumber(_mobileNumberController.text);
     });
   }
 
@@ -68,7 +74,255 @@ class _RegisterViewState extends State<RegisterView> {
   }
 
   Widget _getContentWidget() {
-    return Center();
+    return Container(
+      padding: const EdgeInsets.only(top: AppPadding.p30),
+      // color: ColorManager.darkPrimary,
+      child: SingleChildScrollView(
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              const Image(
+                image: AssetImage(ImageAssets.splashLogo),
+                height: 250,
+                width: 250,
+              ),
+              const SizedBox(height: AppSize.s28),
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: AppPadding.p28,
+                  right: AppPadding.p28,
+                ),
+                child: StreamBuilder<String?>(
+                    stream: _viewmodel.outputErrorUsername,
+                    builder: (context, snapshot) {
+                      return TextFormField(
+                        controller: _usernameController,
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: InputDecoration(
+                          hintText: AppStrings.username,
+                          labelText: AppStrings.username,
+                          errorText: snapshot.data,
+                        ),
+                      );
+                    }),
+              ),
+              Center(
+                child: Padding(
+                  padding: EdgeInsets.only(
+                      top: AppPadding.p16,
+                      left: AppPadding.p28,
+                      right: AppPadding.p28,
+                      bottom: AppPadding.p16),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        flex: 1,
+                        child: CountryCodePicker(
+                          onChanged: (country) {
+                            _viewmodel
+                                .setCountryCode(country.dialCode ?? EMPTY);
+                          },
+                          dialogBackgroundColor: ColorManager.black,
+                          initialSelection: "+98",
+                          hideMainText: true,
+                          showCountryOnly: false,
+                          showOnlyCountryWhenClosed: true,
+                          favorite: ["+98", "+966"],
+                          flagWidth: 40,
+                        ),
+                      ),
+                      Expanded(
+                        flex: 3,
+                        child: StreamBuilder<String?>(
+                            stream: _viewmodel.outputErrorMobileNumber,
+                            builder: (context, snapshot) {
+                              return TextFormField(
+                                controller: _mobileNumberController,
+                                keyboardType: TextInputType.phone,
+                                decoration: InputDecoration(
+                                  hintText: AppStrings.mobileNumber,
+                                  labelText: AppStrings.mobileNumber,
+                                  errorText: snapshot.data,
+                                ),
+                              );
+                            }),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: AppPadding.p28,
+                  right: AppPadding.p28,
+                ),
+                child: StreamBuilder<String?>(
+                    stream: _viewmodel.outputErrorEmail,
+                    builder: (context, snapshot) {
+                      return TextFormField(
+                        controller: _emailController,
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: InputDecoration(
+                          hintText: AppStrings.emailHint,
+                          labelText: AppStrings.emailHint,
+                          errorText: snapshot.data,
+                        ),
+                      );
+                    }),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                    top: AppPadding.p16,
+                    left: AppPadding.p28,
+                    right: AppPadding.p28,
+                    bottom: AppPadding.p16),
+                child: StreamBuilder<String?>(
+                    stream: _viewmodel.outputErrorPassword,
+                    builder: (context, snapshot) {
+                      return TextFormField(
+                        controller: _passwordController,
+                        keyboardType: TextInputType.visiblePassword,
+                        decoration: InputDecoration(
+                          hintText: AppStrings.password,
+                          labelText: AppStrings.password,
+                          errorText: snapshot.data,
+                        ),
+                      );
+                    }),
+              ),
+              // const SizedBox(height: AppSize.s28),
+              Padding(
+                padding: const EdgeInsets.only(
+                    left: AppPadding.p28,
+                    right: AppPadding.p28,
+                    bottom: AppPadding.p16),
+                child: Container(
+                  height: AppSize.s40,
+                  decoration: BoxDecoration(
+                      border: Border.all(color: ColorManager.lightGrey),
+                      borderRadius:
+                          BorderRadius.all(Radius.circular(AppSize.s12))),
+                  child: GestureDetector(
+                    onTap: () {
+                      // _viewmodel.setProfilePicture(profilePicture)
+                      _showPicker(context);
+                    },
+                    child: _getMediaWidget(),
+                  ),
+                ),
+              ),
+              const SizedBox(height: AppSize.s28),
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: AppPadding.p28,
+                  right: AppPadding.p28,
+                ),
+                child: StreamBuilder<bool>(
+                  stream: _viewmodel.outputIsAllInputsValid,
+                  builder: (context, snapshot) {
+                    return SizedBox(
+                      width: double.infinity,
+                      height: AppSize.s40,
+                      child: ElevatedButton(
+                          onPressed: (snapshot.data ?? false)
+                              ? () {
+                                  _viewmodel.register();
+                                }
+                              : null,
+                          child: const Text(AppStrings.register)),
+                    );
+                  },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                    top: AppPadding.p8,
+                    left: AppPadding.p28,
+                    right: AppPadding.p28),
+                child: TextButton(
+                  onPressed: () {
+                    initForgotPasswordModule();
+                    Navigator.of(context).pop();
+                  },
+                  child: Text(
+                    AppStrings.haveAccount,
+                    style: Theme.of(context).textTheme.titleSmall,
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  _showPicker(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context) {
+          return SafeArea(
+              child: Wrap(
+            children: [
+              ListTile(
+                trailing: Icon(Icons.arrow_forward),
+                leading: Icon(Icons.camera),
+                title: Text(AppStrings.photoGalley),
+                onTap: () {
+                  _imageFromGallary();
+                  Navigator.of(context).pop();
+                },
+              ),
+              ListTile(
+                trailing: Icon(Icons.arrow_forward),
+                leading: Icon(Icons.browse_gallery),
+                title: Text(AppStrings.photoCamera),
+                onTap: () {
+                  _imageFromCamera();
+                  Navigator.of(context).pop();
+                },
+              )
+            ],
+          ));
+        });
+  }
+
+  _imageFromGallary() async {
+    var image = await picker.pickImage(source: ImageSource.gallery);
+    _viewmodel.setProfilePicture(File(image?.path ?? EMPTY));
+  }
+
+  _imageFromCamera() async {
+    var image = await picker.pickImage(source: ImageSource.camera);
+    _viewmodel.setProfilePicture(File(image?.path ?? EMPTY));
+  }
+
+  Widget _getMediaWidget() {
+    return Padding(
+        padding: EdgeInsets.only(left: AppPadding.p8, right: AppPadding.p8),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Flexible(child: Text(AppStrings.profilePicture)),
+            Flexible(
+              child: StreamBuilder<File?>(
+                  stream: _viewmodel.outputProfilePicture,
+                  builder: (context, snapshot) {
+                    return _imagePickedByUser(snapshot.data);
+                  }),
+            ),
+            Flexible(child: SvgPicture.asset(ImageAssets.photoCameraIc))
+          ],
+        ));
+  }
+
+  Widget _imagePickedByUser(File? image) {
+    if (image != null && image.path.isNotEmpty) {
+      return Image.file(image);
+    } else {
+      return Container();
+    }
   }
 
   @override

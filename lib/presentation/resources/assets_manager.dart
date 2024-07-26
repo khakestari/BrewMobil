@@ -11,7 +11,7 @@ class ImageAssets {
   static const String leftArrowIc = "$IMAGE_PATH/left_arrow_ic.svg";
   static const String rightarrowIc = "$IMAGE_PATH/right_arrow_ic.svg";
   static const String solidCircleIc = "$IMAGE_PATH/solid_circle_ic.svg";
-  static const String photoCameraIc = "$IMAGE_PATH/photo_camera_ic.svg";
+  static const String photoCameraIc = "$IMAGE_PATH/camera_ic.svg";
   static const String settingsRightArrowIc =
       "$IMAGE_PATH/settings_right_arrow_ic.svg";
   static const String changeLangIc = "$IMAGE_PATH/change_lang_ic.svg";

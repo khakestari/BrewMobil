@@ -131,7 +131,7 @@ class RegisterViewmodel extends BaseViewModel
       .map((isPasswordValid) => isPasswordValid ? null : "Invalid Password");
 
   @override
-  Stream<File> get outputIsProfilePictureValid =>
+  Stream<File> get outputProfilePicture =>
       _profilePictureStreamController.stream.map((file) => file);
 
   @override
@@ -267,7 +267,7 @@ abstract class RegisterViewModelOutputs {
   Stream<bool> get outputIsMobileNumberValid;
   Stream<String?> get outputErrorMobileNumber;
 
-  Stream<File> get outputIsProfilePictureValid;
+  Stream<File> get outputProfilePicture;
 
   Stream<bool> get outputIsAllInputsValid;
 }

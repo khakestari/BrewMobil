@@ -15,6 +15,7 @@ class AppStrings {
       "Savor Every Sip, Delivered to Your Doorstep";
   static const String skip = "Skip";
   static const String username = "Username";
+  static const String mobileNumber = "Mobile Number";
   static const String usernameError = "Username is wrong";
   static const String passwordError = "password is wrong";
   static const String password = "Password";
@@ -28,11 +29,11 @@ class AppStrings {
   static const String invalidEmail = "invalid_email";
   static const String resetPassword = "Reset Password";
   static const String success = "success";
-  static const String profilePicture = "upload_profile_picture";
-  static const String photoGalley = "photo_gallery";
-  static const String photoCamera = "camera";
+  static const String profilePicture = "upload profile picture";
+  static const String photoGalley = "Photo from gallery";
+  static const String photoCamera = "Photo from camera";
   static const String register = "register";
-  static const String haveAccount = "already_have_account";
+  static const String haveAccount = "already have an account? Login";
   static const String home = "home";
   static const String notifications = "notification";
   static const String search = "search";
