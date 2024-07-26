@@ -170,6 +170,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
   }
 }
 
+// ignore: must_be_immutable
 class OnBoardingPage extends StatelessWidget {
   SliderObject? _sliderObject;
   OnBoardingPage(this._sliderObject);

@@ -1,12 +1,15 @@
 import 'dart:io';
+import 'package:advanced_shop_app/app/app_prefs.dart';
 import 'package:advanced_shop_app/app/di.dart';
 import 'package:advanced_shop_app/data/mapper/mapper.dart';
 import 'package:advanced_shop_app/presentation/common/state_renderer/state_renderer_impleneter.dart';
 import 'package:advanced_shop_app/presentation/register/register_viewmodel.dart';
 import 'package:advanced_shop_app/presentation/resources/color_manager.dart';
+import 'package:advanced_shop_app/presentation/resources/routes_manager.dart';
 import 'package:advanced_shop_app/presentation/resources/values_manager.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -22,6 +25,7 @@ class RegisterView extends StatefulWidget {
 
 class _RegisterViewState extends State<RegisterView> {
   RegisterViewmodel _viewmodel = instance<RegisterViewmodel>();
+  AppPreferences _appPreferences = instance<AppPreferences>();
   ImagePicker picker = instance<ImagePicker>();
   final _formKey = GlobalKey<FormState>();
 
@@ -49,6 +53,14 @@ class _RegisterViewState extends State<RegisterView> {
     });
     _mobileNumberController.addListener(() {
       _viewmodel.setmobileNumber(_mobileNumberController.text);
+    });
+
+    _viewmodel.isUserLoggedInSuccessfullyStreamController.stream
+        .listen((isSuccessLoggedIn) {
+      SchedulerBinding.instance.addPostFrameCallback((_) {
+        _appPreferences.setIsUserLoggedIn();
+        Navigator.of(context).pushReplacementNamed(Routes.mainRoute);
+      });
     });
   }
 
@@ -119,6 +131,10 @@ class _RegisterViewState extends State<RegisterView> {
                       Expanded(
                         flex: 1,
                         child: CountryCodePicker(
+                          onInit: (country) {
+                            _viewmodel
+                                .setCountryCode(country?.dialCode ?? EMPTY);
+                          },
                           onChanged: (country) {
                             _viewmodel
                                 .setCountryCode(country.dialCode ?? EMPTY);
@@ -200,12 +216,12 @@ class _RegisterViewState extends State<RegisterView> {
                 child: Container(
                   height: AppSize.s40,
                   decoration: BoxDecoration(
-                      border: Border.all(color: ColorManager.lightGrey),
-                      borderRadius:
-                          BorderRadius.all(Radius.circular(AppSize.s12))),
+                    border: Border.all(color: ColorManager.lightGrey),
+                    borderRadius:
+                        BorderRadius.all(Radius.circular(AppSize.s12)),
+                  ),
                   child: GestureDetector(
                     onTap: () {
-                      // _viewmodel.setProfilePicture(profilePicture)
                       _showPicker(context);
                     },
                     child: _getMediaWidget(),

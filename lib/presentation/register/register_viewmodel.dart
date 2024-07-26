@@ -26,8 +26,8 @@ class RegisterViewmodel extends BaseViewModel
   StreamController _isAllInputsValidStreamController =
       StreamController<void>.broadcast();
 
-  // StreamController isUserLoggedInSuccessfullyStreamController =
-  //     StreamController<bool>();
+  StreamController isUserLoggedInSuccessfullyStreamController =
+      StreamController<bool>();
 
   var registerViewObject = RegisterObject("", "", "", "", "", "");
   RegisterUseCase _registerUseCase;
@@ -43,7 +43,7 @@ class RegisterViewmodel extends BaseViewModel
     _profilePictureStreamController.close();
 
     _isAllInputsValidStreamController.close();
-    // isUserLoggedInSuccessfullyStreamController.close();
+    isUserLoggedInSuccessfullyStreamController.close();
   }
 
   @override
@@ -71,7 +71,7 @@ class RegisterViewmodel extends BaseViewModel
       // right -> success (data)
       inputState.add(ContentState());
       // navigate to main screen after the login
-      // isUserLoggedInSuccessfullyStreamController.add(true);
+      isUserLoggedInSuccessfullyStreamController.add(true);
     });
   }
 
@@ -177,6 +177,7 @@ class RegisterViewmodel extends BaseViewModel
 
   @override
   setEmail(String email) {
+    inputemail.add(email);
     if (isEmailValid(email)) {
       registerViewObject = registerViewObject.copyWith(email: email);
     } else {
@@ -187,6 +188,7 @@ class RegisterViewmodel extends BaseViewModel
 
   @override
   setPassword(String password) {
+    inputpassword.add(password);
     if (_isPasswordValid(password)) {
       registerViewObject = registerViewObject.copyWith(
           password: password); // using data class like kotlin
@@ -198,6 +200,7 @@ class RegisterViewmodel extends BaseViewModel
 
   @override
   setProfilePicture(File profilePicture) {
+    inputprofilePicture.add(profilePicture);
     if (profilePicture.path.isNotEmpty) {
       registerViewObject = registerViewObject.copyWith(
           profilePicture: profilePicture.path); // using data class like kotlin
@@ -209,6 +212,7 @@ class RegisterViewmodel extends BaseViewModel
 
   @override
   setUsername(String username) {
+    inputusername.add(username);
     if (_isUsernameValid(username)) {
       // update register view object with username value
       registerViewObject = registerViewObject.copyWith(
@@ -222,6 +226,7 @@ class RegisterViewmodel extends BaseViewModel
 
   @override
   setmobileNumber(String mobileNumber) {
+    inputmobileNumber.add(mobileNumber);
     if (_isMobileNumberValid(mobileNumber)) {
       registerViewObject =
           registerViewObject.copyWith(mobileNumber: mobileNumber);
