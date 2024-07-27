@@ -57,6 +57,7 @@ class _RegisterViewState extends State<RegisterView> {
 
     _viewmodel.isUserLoggedInSuccessfullyStreamController.stream
         .listen((isSuccessLoggedIn) {
+      // navigate to main screen
       SchedulerBinding.instance.addPostFrameCallback((_) {
         _appPreferences.setIsUserLoggedIn();
         Navigator.of(context).pushReplacementNamed(Routes.mainRoute);
@@ -284,7 +285,7 @@ class _RegisterViewState extends State<RegisterView> {
               ListTile(
                 trailing: Icon(Icons.arrow_forward),
                 leading: Icon(Icons.camera),
-                title: Text(AppStrings.photoGalley),
+                title: Text(AppStrings.photoGallery),
                 onTap: () {
                   _imageFromGallary();
                   Navigator.of(context).pop();
