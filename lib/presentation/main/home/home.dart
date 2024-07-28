@@ -79,32 +79,36 @@ class _HomePageState extends State<HomePage> {
   // banner
   _getBanner(List<BannerAd>? banners) {
     if (banners != null) {
-      return CarouselSlider(
-          items: banners
-              .map((banner) => SizedBox(
-                    width: double.infinity,
-                    child: Card(
-                      elevation: AppSize.s1_5,
-                      shape: RoundedRectangleBorder(
+      return Padding(
+        padding: EdgeInsets.only(top: AppPadding.p12),
+        child: CarouselSlider(
+            items: banners
+                .map((banner) => SizedBox(
+                      width: double.infinity,
+                      child: Card(
+                        elevation: AppSize.s1_5,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(AppSize.s12),
+                            side: BorderSide(
+                                color: ColorManager.white,
+                                width: AppSize.s1_5)),
+                        child: ClipRRect(
                           borderRadius: BorderRadius.circular(AppSize.s12),
-                          side: BorderSide(
-                              color: ColorManager.white, width: AppSize.s1_5)),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(AppSize.s12),
-                        child: Image.network(
-                          banner.image,
-                          fit: BoxFit.cover,
+                          child: Image.network(
+                            banner.image,
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
-                    ),
-                  ))
-              .toList(),
-          options: CarouselOptions(
-            height: AppSize.s190,
-            autoPlay: true,
-            enableInfiniteScroll: true,
-            enlargeCenterPage: true,
-          ));
+                    ))
+                .toList(),
+            options: CarouselOptions(
+              height: AppSize.s190,
+              autoPlay: true,
+              enableInfiniteScroll: true,
+              enlargeCenterPage: true,
+            )),
+      );
     } else {
       return Container();
     }
