@@ -48,16 +48,20 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _getContentWidgets() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _getBannersCarousel(),
-        _getSection(AppStrings.services),
-        _getServices(),
-        _getSection(AppStrings.stores),
-        _getStores(),
-      ],
-    );
+    return StreamBuilder<HomeViewObject>(
+        stream: _viewModel.outputHomeData,
+        builder: (context, snapshot) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _getBanner(snapshot.data?.banners),
+              _getSection(AppStrings.services),
+              _getService(snapshot.data?.services),
+              _getSection(AppStrings.stores),
+              _getStore(snapshot.data?.stores),
+            ],
+          );
+        });
   }
 
   Widget _getSection(String title) {
@@ -73,15 +77,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   // banner
-
-  Widget _getBannersCarousel() {
-    return StreamBuilder<List<BannerAd>>(
-        stream: _viewModel.outputBanners,
-        builder: (context, snapshot) {
-          return _getBanner(snapshot.data);
-        });
-  }
-
   _getBanner(List<BannerAd>? banners) {
     if (banners != null) {
       return CarouselSlider(
@@ -116,14 +111,6 @@ class _HomePageState extends State<HomePage> {
   }
 
 // Services
-  Widget _getServices() {
-    return StreamBuilder<List<Service>>(
-        stream: _viewModel.outputServices,
-        builder: (context, snapshot) {
-          return _getService(snapshot.data);
-        });
-  }
-
   Widget _getService(List<Service>? services) {
     if (services != null) {
       return Padding(
@@ -149,7 +136,7 @@ class _HomePageState extends State<HomePage> {
                           child: Image.network(
                             service.image,
                             fit: BoxFit.cover,
-                            width: AppSize.s100,
+                            width: AppSize.s120,
                             height: AppSize.s100,
                           ),
                         ),
@@ -177,14 +164,6 @@ class _HomePageState extends State<HomePage> {
   }
 
 // stores
-  Widget _getStores() {
-    return StreamBuilder<List<Store>>(
-        stream: _viewModel.outputStores,
-        builder: (context, snapshot) {
-          return _getStore(snapshot.data);
-        });
-  }
-
   Widget _getStore(List<Store>? stores) {
     if (stores != null) {
       return Padding(
