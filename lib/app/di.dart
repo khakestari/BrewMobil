@@ -1,4 +1,6 @@
+import 'package:advanced_shop_app/domain/usecase/home_usecase.dart';
 import 'package:advanced_shop_app/domain/usecase/register_usecase.dart';
+import 'package:advanced_shop_app/presentation/main/home/home_viewmodel.dart';
 import 'package:advanced_shop_app/presentation/register/register_viewmodel.dart';
 import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
@@ -70,5 +72,12 @@ initRegisterModule() {
     instance.registerFactory<RegisterViewmodel>(
         () => RegisterViewmodel(instance()));
     instance.registerFactory<ImagePicker>(() => ImagePicker());
+  }
+}
+
+initHomeModule() {
+  if (!GetIt.I.isRegistered<HomeUseCase>()) {
+    instance.registerFactory<HomeUseCase>(() => HomeUseCase(instance()));
+    instance.registerFactory<HomeViewModel>(() => HomeViewModel(instance()));
   }
 }

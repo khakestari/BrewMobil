@@ -1,11 +1,12 @@
-import 'package:advanced_shop_app/presentation/main/home.dart';
-import 'package:advanced_shop_app/presentation/main/notifications.dart';
-import 'package:advanced_shop_app/presentation/main/search.dart';
-import 'package:advanced_shop_app/presentation/main/settings.dart';
-import 'package:advanced_shop_app/presentation/resources/color_manager.dart';
-import 'package:advanced_shop_app/presentation/resources/strings_manager.dart';
-import 'package:advanced_shop_app/presentation/resources/values_manager.dart';
 import 'package:flutter/material.dart';
+
+import '../main/home/home.dart';
+import '../main/notifications.dart';
+import '../main/search.dart';
+import '../main/settings.dart';
+import '../../presentation/resources/color_manager.dart';
+import '../../presentation/resources/strings_manager.dart';
+import '../../presentation/resources/values_manager.dart';
 
 class MainView extends StatefulWidget {
   const MainView({super.key});
