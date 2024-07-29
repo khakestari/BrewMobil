@@ -16,6 +16,10 @@ abstract class LocalDataSource {
   void clearCach();
 
   void removeFromCatch(String key);
+
+  Future<StoreDetailsResponse> getStoreDetails();
+
+  Future<void> saveStoreDetailsToCache(StoreDetailsResponse detailResponse);
 }
 
 class LocalDataSourceImplementer implements LocalDataSource {
@@ -49,6 +53,23 @@ class LocalDataSourceImplementer implements LocalDataSource {
   @override
   void removeFromCatch(String key) {
     cacheMap.remove(key);
+  }
+
+  @override
+  Future<StoreDetailsResponse> getStoreDetails() async {
+    CatchedItem? catchedItem = cacheMap[CACHE_STORE_DETAILS_KEY];
+    if (catchedItem != null &&
+        catchedItem.isValid(CACHE_STORE_DETAILS_INTERVAL)) {
+      return catchedItem.data;
+    } else {
+      throw ErrorHandler.handle(DataSource.CACHE_ERROR);
+    }
+  }
+
+  @override
+  Future<void> saveStoreDetailsToCache(
+      StoreDetailsResponse detailResponse) async {
+    cacheMap[CACHE_STORE_DETAILS_KEY] = CatchedItem(detailResponse);
   }
 }
 

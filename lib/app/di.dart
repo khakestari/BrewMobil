@@ -1,7 +1,10 @@
 import 'package:advanced_shop_app/domain/usecase/home_usecase.dart';
 import 'package:advanced_shop_app/domain/usecase/register_usecase.dart';
+import 'package:advanced_shop_app/domain/usecase/store_details_usecase.dart';
 import 'package:advanced_shop_app/presentation/main/home/home_viewmodel.dart';
 import 'package:advanced_shop_app/presentation/register/register_viewmodel.dart';
+import 'package:advanced_shop_app/presentation/store_details/store_details.dart';
+import 'package:advanced_shop_app/presentation/store_details/store_details_viewmodel.dart';
 import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
@@ -84,5 +87,14 @@ initHomeModule() {
   if (!GetIt.I.isRegistered<HomeUseCase>()) {
     instance.registerFactory<HomeUseCase>(() => HomeUseCase(instance()));
     instance.registerFactory<HomeViewModel>(() => HomeViewModel(instance()));
+  }
+}
+
+initStoreDetailsModule() {
+  if (!GetIt.I.isRegistered<StoreDetailsUseCase>()) {
+    instance.registerFactory<StoreDetailsUseCase>(
+        () => StoreDetailsUseCase(instance()));
+    instance.registerFactory<StoreDetailsViewModel>(
+        () => StoreDetailsViewModel(instance()));
   }
 }
