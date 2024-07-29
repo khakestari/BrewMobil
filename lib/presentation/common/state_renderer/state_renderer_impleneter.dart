@@ -105,8 +105,8 @@ extension FlowStateExtension on FlowState {
         }
       case ErrorState:
         {
-          print("93");
-          print(this.runtimeType);
+          // print("93");
+          // print(this.runtimeType);
           dismissDialog(context);
           if (getStateRendererType() == StateRendererType.POPUP_ERROR_STATE) {
             // showing popup dialog
@@ -160,7 +160,7 @@ extension FlowStateExtension on FlowState {
   showPopUp(
       BuildContext context, StateRendererType stateRendererType, String message,
       {String title = EMPTY}) {
-    WidgetsBinding.instance.addPostFrameCallback((_) => showDialog(
+    WidgetsBinding.instance?.addPostFrameCallback((_) => showDialog(
         context: context,
         builder: (BuildContext context) => StateRenderer(
               stateRendererType: stateRendererType,

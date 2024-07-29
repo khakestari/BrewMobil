@@ -1,3 +1,5 @@
+import 'package:advanced_shop_app/data/data_source/local_data_source.dart';
+import 'package:advanced_shop_app/data/responses/responses.dart';
 import 'package:dartz/dartz.dart';
 
 import '../../data/network/error_handler.dart';
@@ -11,8 +13,10 @@ import '../../domain/repository/repository.dart';
 
 class RepositoryImplementer extends Repository {
   RemoteDataSource _remoteDataSource;
+  LocalDataSource _localDataSource;
   NetworkInfo _networkInfo;
-  RepositoryImplementer(this._remoteDataSource, this._networkInfo);
+  RepositoryImplementer(
+      this._remoteDataSource, this._localDataSource, this._networkInfo);
 
   @override
   Future<Either<Failure, Authentication>> login(
@@ -88,24 +92,35 @@ class RepositoryImplementer extends Repository {
 
   @override
   Future<Either<Failure, HomeObject>> getHome() async {
-    if (await _networkInfo.isConnected) {
-      try {
-        final response = await _remoteDataSource.getHome();
-        if (response.status == ApiInternalStatus.SUCCESS) // success
-        {
-          // return data
-          return Right(response.toDomain());
-        } else {
-          // return biz logic error
-          return Left(Failure(response.status ?? ApiInternalStatus.FAILURE,
-              response.message ?? ResponseMessage.DEFAULT));
+    try {
+      // print("at least we try");
+      final response = await _localDataSource.getHome();
+      // print("here we got the response");
+      return Right(response.toDomain());
+    } catch (cachError) {
+      // print("101");
+      // print(cachError);
+      if (await _networkInfo.isConnected) {
+        try {
+          final response = await _remoteDataSource.getHome();
+          if (response.status == ApiInternalStatus.SUCCESS) // success
+          {
+            // return data
+            // save response to local data source
+            _localDataSource.saveHomeToCache(response);
+            return Right(response.toDomain());
+          } else {
+            // return biz logic error
+            return Left(Failure(response.status ?? ApiInternalStatus.FAILURE,
+                response.message ?? ResponseMessage.DEFAULT));
+          }
+        } catch (error) {
+          return Left(ErrorHandler.handle(error).failure);
         }
-      } catch (error) {
-        return Left(ErrorHandler.handle(error).failure);
+      } else {
+        // return connection error
+        return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
       }
-    } else {
-      // return connection error
-      return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
     }
   }
 }

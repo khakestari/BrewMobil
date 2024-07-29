@@ -5,10 +5,17 @@ import '../responses/responses.dart';
 const CACHE_HOME_KEY = "CACHE_HOME_KEY";
 const CATCH_HOME_INTERVAL = 60 * 1000; // one min in milis
 
+const CACHE_STORE_DETAILS_KEY = "CACHE_STORE_DETAILS_KEY";
+const CACHE_STORE_DETAILS_INTERVAL = 60 * 1000; // 30s in millis
+
 abstract class LocalDataSource {
   Future<HomeResponse> getHome();
 
-  Future<void> saveHomeToCache(HomeResponse HomeResponse);
+  Future<void> saveHomeToCache(HomeResponse homeResponse);
+
+  void clearCach();
+
+  void removeFromCatch(String key);
 }
 
 class LocalDataSourceImplementer implements LocalDataSource {
@@ -16,9 +23,13 @@ class LocalDataSourceImplementer implements LocalDataSource {
   Map<String, CatchedItem> cacheMap = Map();
 
   @override
-  Future<HomeResponse> getHome() {
+  Future<HomeResponse> getHome() async {
     CatchedItem? catchedItem = cacheMap[CACHE_HOME_KEY];
+    print(catchedItem?.data ?? "null shode");
+    print("baaaaaaa");
     if (catchedItem != null && catchedItem.isValid(CATCH_HOME_INTERVAL)) {
+      print(catchedItem.data);
+      print("here we return");
       return catchedItem.data;
     } else {
       throw ErrorHandler.handle(DataSource.CACHE_ERROR);
@@ -28,6 +39,16 @@ class LocalDataSourceImplementer implements LocalDataSource {
   @override
   Future<void> saveHomeToCache(HomeResponse homeResponse) async {
     cacheMap[CACHE_HOME_KEY] = CatchedItem(homeResponse);
+  }
+
+  @override
+  void clearCach() {
+    cacheMap.clear();
+  }
+
+  @override
+  void removeFromCatch(String key) {
+    cacheMap.remove(key);
   }
 }
 
