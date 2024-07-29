@@ -13,7 +13,7 @@ abstract class LocalDataSource {
 
   Future<void> saveHomeToCache(HomeResponse homeResponse);
 
-  void clearCach();
+  void clearCache();
 
   void removeFromCatch(String key);
 
@@ -46,7 +46,7 @@ class LocalDataSourceImplementer implements LocalDataSource {
   }
 
   @override
-  void clearCach() {
+  void clearCache() {
     cacheMap.clear();
   }
 

@@ -92,6 +92,11 @@ flutter:
     - assets/images/solid_circle_ic.svg
     - assets/images/hollow_circle_ic.svg
     - assets/images/camera_ic.svg
+    - assets/images/contactus_ic.svg
+    - assets/images/language_ic.svg
+    - assets/images/logout_ic.svg
+    - assets/images/share_ic.svg
+    - assets/images/settings_right_arrow_ic.svg
     - assets/json/empty.json
     - assets/json/error.json
     - assets/json/loading.json

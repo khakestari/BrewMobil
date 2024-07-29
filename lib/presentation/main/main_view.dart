@@ -45,6 +45,7 @@ class _MainViewState extends State<MainView> {
             backgroundColor: Colors.white,
             selectedItemColor: ColorManager.primary,
             unselectedItemColor: ColorManager.grey,
+            showSelectedLabels: false,
             currentIndex: _currentIndex,
             onTap: onTap,
             items: const [
