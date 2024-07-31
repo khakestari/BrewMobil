@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../main/home/home.dart';
@@ -34,7 +35,7 @@ class _MainViewState extends State<MainView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(_title),
+        title: Text(_title).tr(),
       ),
       body: pages[_currentIndex],
       bottomNavigationBar: Container(
@@ -48,16 +49,16 @@ class _MainViewState extends State<MainView> {
             showSelectedLabels: false,
             currentIndex: _currentIndex,
             onTap: onTap,
-            items: const [
+            items: [
               BottomNavigationBarItem(
-                  label: AppStrings.home, icon: Icon(Icons.home)),
+                  label: AppStrings.home.tr(), icon: Icon(Icons.home)),
               BottomNavigationBarItem(
-                  label: AppStrings.search, icon: Icon(Icons.search)),
+                  label: AppStrings.search.tr(), icon: Icon(Icons.search)),
               BottomNavigationBarItem(
-                  label: AppStrings.notifications,
+                  label: AppStrings.notifications.tr(),
                   icon: Icon(Icons.notifications)),
               BottomNavigationBarItem(
-                  label: AppStrings.settings, icon: Icon(Icons.settings)),
+                  label: AppStrings.settings.tr(), icon: Icon(Icons.settings)),
             ]),
       ),
     );

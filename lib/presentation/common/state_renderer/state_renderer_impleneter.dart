@@ -1,4 +1,6 @@
 import 'package:advanced_shop_app/data/mapper/mapper.dart';
+import 'package:advanced_shop_app/presentation/resources/routes_manager.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../../../presentation/resources/strings_manager.dart';
@@ -16,7 +18,7 @@ class LoadingState extends FlowState {
   String message;
 
   LoadingState({required this.stateRendererType, String? message})
-      : message = message ?? AppStrings.loading;
+      : message = message ?? AppStrings.loading.tr();
 
   @override
   String getMessage() => message;
@@ -88,7 +90,7 @@ extension FlowStateExtension on FlowState {
     switch (this.runtimeType) {
       case LoadingState:
         {
-          print("76");
+          print("92");
           print(this.runtimeType);
           if (getStateRendererType() == StateRendererType.POPUP_LOADING_STATE) {
             // showing popup dialog
@@ -105,11 +107,13 @@ extension FlowStateExtension on FlowState {
         }
       case ErrorState:
         {
-          // print("93");
-          // print(this.runtimeType);
+          print("109");
+          print(this.runtimeType);
           dismissDialog(context);
+          print(context);
           if (getStateRendererType() == StateRendererType.POPUP_ERROR_STATE) {
             // showing popup dialog
+            dismissDialog(context);
             showPopUp(context, getStateRendererType(), getMessage());
             // return the content ui of the screen
             return contentScreenWidget;
@@ -138,19 +142,23 @@ extension FlowStateExtension on FlowState {
           dismissDialog(context);
           showPopUp(
               context, StateRendererType.POPUP_SUCCESS_STATE, getMessage(),
-              title: AppStrings.success);
+              title: AppStrings.success.tr());
           return contentScreenWidget;
         }
       default:
-        {
-          return contentScreenWidget;
-        }
+        return contentScreenWidget;
     }
   }
 
   dismissDialog(BuildContext context) {
+    print(_isThereCurrentDialogShowing(context));
     if (_isThereCurrentDialogShowing(context)) {
-      Navigator.of(context, rootNavigator: true).pop(true);
+      print("157 context check");
+      print(context);
+      //  Navigator.of(context, rootNavigator: true)
+      //     .pop(_isThereCurrentDialogShowing(context));
+      Navigator.of(context).pop();
+      // Navigator.of(context, rootNavigator: true).pop(true);
     }
   }
 

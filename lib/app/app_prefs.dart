@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_final_fields, constant_identifier_names
 
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../presentation/resources/language_manager.dart';
@@ -19,6 +20,26 @@ class AppPreferences {
       return language;
     } else {
       return LanguageType.ENGLISH.getValue();
+    }
+  }
+
+  Future<void> setLanguageChanged() async {
+    String currentLanguage = await getAppLanguage();
+    if (currentLanguage == LanguageType.PERSIAN.getValue()) {
+      _sharedPreferences.setString(
+          PREFS_KEY_LANG, LanguageType.ENGLISH.getValue());
+    } else {
+      _sharedPreferences.setString(
+          PREFS_KEY_LANG, LanguageType.PERSIAN.getValue());
+    }
+  }
+
+  Future<Locale> getLocal() async {
+    String currentLanguage = await getAppLanguage();
+    if (currentLanguage == LanguageType.PERSIAN.getValue()) {
+      return PERSIAN_LOCAL;
+    } else {
+      return ENGLISH_LOCAL;
     }
   }
 

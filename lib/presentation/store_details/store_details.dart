@@ -1,5 +1,6 @@
 import 'package:advanced_shop_app/domain/model/model.dart';
 import 'package:advanced_shop_app/presentation/store_details/store_details_viewmodel.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../../app/di.dart';
@@ -47,7 +48,7 @@ class _StoreDetailsViewState extends State<StoreDetailsView> {
     return Scaffold(
         backgroundColor: ColorManager.white,
         appBar: AppBar(
-          title: Text(AppStrings.storeDetails),
+          title: Text(AppStrings.storeDetails).tr(),
           elevation: AppSize.s0,
           iconTheme: IconThemeData(
             //back button
@@ -102,7 +103,7 @@ class _StoreDetailsViewState extends State<StoreDetailsView> {
             left: AppPadding.p12,
             right: AppPadding.p12,
             bottom: AppPadding.p2),
-        child: Text(title));
+        child: Text(title).tr());
   }
 
   Widget _getInfoText(String info) {

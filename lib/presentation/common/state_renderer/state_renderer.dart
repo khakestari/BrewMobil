@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, constant_identifier_names
 import 'package:advanced_shop_app/presentation/resources/assets_manager.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
@@ -36,7 +37,7 @@ class StateRenderer extends StatelessWidget {
       String? message,
       String? title,
       required this.retryActionFunction})
-      : message = message ?? AppStrings.loading,
+      : message = message ?? AppStrings.loading.tr(),
         title = title ?? EMPTY,
         super(key: key);
 
@@ -129,7 +130,7 @@ class StateRenderer extends StatelessWidget {
           message,
           style: getMediumStyle(
               color: ColorManager.primary, fontSize: FontSize.s16),
-        ),
+        ).tr(),
       ),
     );
   }
@@ -152,7 +153,7 @@ class StateRenderer extends StatelessWidget {
                       .pop(); // popup state error so we need to dismiss the dialog
                 }
               },
-              child: Text(buttonTitle)),
+              child: Text(buttonTitle).tr()),
         ),
       ),
     );

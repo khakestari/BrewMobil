@@ -8,6 +8,7 @@ import 'package:advanced_shop_app/presentation/resources/color_manager.dart';
 import 'package:advanced_shop_app/presentation/resources/routes_manager.dart';
 import 'package:advanced_shop_app/presentation/resources/values_manager.dart';
 import 'package:country_code_picker/country_code_picker.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -113,8 +114,8 @@ class _RegisterViewState extends State<RegisterView> {
                         controller: _usernameController,
                         keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
-                          hintText: AppStrings.username,
-                          labelText: AppStrings.username,
+                          hintText: AppStrings.username.tr(),
+                          labelText: AppStrings.username.tr(),
                           errorText: snapshot.data,
                         ),
                       );
@@ -157,9 +158,10 @@ class _RegisterViewState extends State<RegisterView> {
                               return TextFormField(
                                 controller: _mobileNumberController,
                                 keyboardType: TextInputType.phone,
+                                textInputAction: TextInputAction.next,
                                 decoration: InputDecoration(
-                                  hintText: AppStrings.mobileNumber,
-                                  labelText: AppStrings.mobileNumber,
+                                  hintText: AppStrings.mobileNumber.tr(),
+                                  labelText: AppStrings.mobileNumber.tr(),
                                   errorText: snapshot.data,
                                 ),
                               );
@@ -180,9 +182,10 @@ class _RegisterViewState extends State<RegisterView> {
                       return TextFormField(
                         controller: _emailController,
                         keyboardType: TextInputType.emailAddress,
+                        textInputAction: TextInputAction.next,
                         decoration: InputDecoration(
-                          hintText: AppStrings.emailHint,
-                          labelText: AppStrings.emailHint,
+                          hintText: AppStrings.emailHint.tr(),
+                          labelText: AppStrings.emailHint.tr(),
                           errorText: snapshot.data,
                         ),
                       );
@@ -201,8 +204,8 @@ class _RegisterViewState extends State<RegisterView> {
                         controller: _passwordController,
                         keyboardType: TextInputType.visiblePassword,
                         decoration: InputDecoration(
-                          hintText: AppStrings.password,
-                          labelText: AppStrings.password,
+                          hintText: AppStrings.password.tr(),
+                          labelText: AppStrings.password.tr(),
                           errorText: snapshot.data,
                         ),
                       );
@@ -247,7 +250,7 @@ class _RegisterViewState extends State<RegisterView> {
                                   _viewmodel.register();
                                 }
                               : null,
-                          child: const Text(AppStrings.register)),
+                          child: const Text(AppStrings.register).tr()),
                     );
                   },
                 ),
@@ -265,7 +268,7 @@ class _RegisterViewState extends State<RegisterView> {
                   child: Text(
                     AppStrings.haveAccount,
                     style: Theme.of(context).textTheme.titleSmall,
-                  ),
+                  ).tr(),
                 ),
               )
             ],
@@ -285,7 +288,7 @@ class _RegisterViewState extends State<RegisterView> {
               ListTile(
                 trailing: Icon(Icons.arrow_forward),
                 leading: Icon(Icons.camera),
-                title: Text(AppStrings.photoGallery),
+                title: Text(AppStrings.photoGallery).tr(),
                 onTap: () {
                   _imageFromGallary();
                   Navigator.of(context).pop();
@@ -294,7 +297,7 @@ class _RegisterViewState extends State<RegisterView> {
               ListTile(
                 trailing: Icon(Icons.arrow_forward),
                 leading: Icon(Icons.browse_gallery),
-                title: Text(AppStrings.photoCamera),
+                title: Text(AppStrings.photoCamera).tr(),
                 onTap: () {
                   _imageFromCamera();
                   Navigator.of(context).pop();
@@ -321,7 +324,7 @@ class _RegisterViewState extends State<RegisterView> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Flexible(child: Text(AppStrings.profilePicture)),
+            Flexible(child: Text(AppStrings.profilePicture).tr()),
             Flexible(
               child: StreamBuilder<File?>(
                   stream: _viewmodel.outputProfilePicture,
