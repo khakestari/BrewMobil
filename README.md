@@ -1,6 +1,5 @@
-# BrewMobil
-
-This project is a Flutter application following the Clean Architecture design pattern and MVVM (Model-View-ViewModel), inspired by the Flutter Advanced Course - Clean Architecture With MVVM by Mina Farid on Udemy.
+# <img src="https://github.com/user-attachments/assets/efc2952a-bb49-47fa-94e9-593c8a6526f0" alt="logo" width="70" align="center"> BrewMobil
+  This project is a Flutter application following the Clean Architecture design pattern and MVVM (Model-View-ViewModel), inspired by the Flutter Advanced Course - Clean Architecture With MVVM by Mina Farid on Udemy.
 
 ## Table of Contents
 1. [Overview](#overview)
@@ -11,7 +10,7 @@ This project is a Flutter application following the Clean Architecture design pa
 6. [Credits](#credits)
 
 ## Overview
-This app demonstrates the Clean Architecture design pattern in Flutter, with the separation of concerns between different layers: Data, Domain, and Presentation. It provides a scalable, testable, and maintainable code structure.
+  This app demonstrates the Clean Architecture design pattern in Flutter, with the separation of concerns between different layers: Data, Domain, and Presentation. It provides a scalable, testable, and maintainable code structure.
 
 ## Features
 - State Management using Stream Controller and RX Dart
@@ -27,7 +26,7 @@ This app demonstrates the Clean Architecture design pattern in Flutter, with the
 - Responsive UI with SVG and JSON Animations
 
 ## Architecture
-The project follows Clean Architecture with clear separations between:
+  The project follows Clean Architecture with clear separations between:
 
 - Presentation Layer: UI components (Splash, Onboarding, Login, etc.), state rendering, and localization.
 - Domain Layer: Business logic with UseCases, Repository interfaces, and models.
@@ -65,4 +64,4 @@ The project follows Clean Architecture with clear separations between:
 <img src="https://github.com/user-attachments/assets/2bca7f5f-d018-4638-95d7-08d0e9e2d842" alt="Home" width="200">
 
 ## Credits
-This project was created following the [Flutter Advanced Course - Clean Architecture With MVVM by Mina Farid on Udemy](https://www.udemy.com/course/flutter-advanced-course-clean-architecture-with-mvvm/?couponCode=LETSLEARNNOWPP).
+  This project was created following the [Flutter Advanced Course - Clean Architecture With MVVM by Mina Farid on Udemy](https://www.udemy.com/course/flutter-advanced-course-clean-architecture-with-mvvm/?couponCode=LETSLEARNNOWPP).
