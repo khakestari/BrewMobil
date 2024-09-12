@@ -38,7 +38,7 @@ class _StoreDetailsViewState extends State<StoreDetailsView> {
             return snapshot.data?.getScreenWidget(context, _getContentWidgets(),
                     () {
                   _viewModel.start();
-                }) ??
+                }, _viewModel.resetFlowState) ??
                 Container();
           }),
     );

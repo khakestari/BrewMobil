@@ -85,8 +85,12 @@ class SuccessState extends FlowState {
 }
 
 extension FlowStateExtension on FlowState {
-  Widget getScreenWidget(BuildContext context, Widget contentScreenWidget,
-      Function retryActionFunction) {
+  Widget getScreenWidget(
+    BuildContext context,
+    Widget contentScreenWidget,
+    Function retryActionFunction,
+    Function resetFlowState,
+  ) {
     switch (this.runtimeType) {
       case LoadingState:
         {
@@ -94,15 +98,23 @@ extension FlowStateExtension on FlowState {
           print(this.runtimeType);
           if (getStateRendererType() == StateRendererType.POPUP_LOADING_STATE) {
             // showing popup dialog
-            showPopUp(context, getStateRendererType(), getMessage());
+            showPopUp(
+              context: context,
+              stateRendererType: getStateRendererType(),
+              message: getMessage(),
+              resetFlowState: resetFlowState,
+            );
+
             // return the content ui of the screen
             return contentScreenWidget;
           } else // StateRendererType.FULL_SCREEN_LOADING_STATE
           {
             return StateRenderer(
-                stateRendererType: getStateRendererType(),
-                message: getMessage(),
-                retryActionFunction: retryActionFunction);
+              stateRendererType: getStateRendererType(),
+              message: getMessage(),
+              retryActionFunction: retryActionFunction,
+              resetFlowState: resetFlowState,
+            );
           }
         }
       case ErrorState:
@@ -114,15 +126,22 @@ extension FlowStateExtension on FlowState {
           if (getStateRendererType() == StateRendererType.POPUP_ERROR_STATE) {
             // showing popup dialog
             dismissDialog(context);
-            showPopUp(context, getStateRendererType(), getMessage());
+            showPopUp(
+              context: context,
+              stateRendererType: getStateRendererType(),
+              message: getMessage(),
+              resetFlowState: resetFlowState,
+            );
             // return the content ui of the screen
             return contentScreenWidget;
           } else // StateRendererType.FULL_SCREEN_ERROR_STATE
           {
             return StateRenderer(
-                stateRendererType: getStateRendererType(),
-                message: getMessage(),
-                retryActionFunction: retryActionFunction);
+              stateRendererType: getStateRendererType(),
+              message: getMessage(),
+              retryActionFunction: retryActionFunction,
+              resetFlowState: resetFlowState,
+            );
           }
         }
       case ContentState:
@@ -133,16 +152,22 @@ extension FlowStateExtension on FlowState {
       case EmptyState:
         {
           return StateRenderer(
-              stateRendererType: getStateRendererType(),
-              message: getMessage(),
-              retryActionFunction: retryActionFunction);
+            stateRendererType: getStateRendererType(),
+            message: getMessage(),
+            retryActionFunction: retryActionFunction,
+            resetFlowState: resetFlowState,
+          );
         }
       case SuccessState:
         {
           dismissDialog(context);
           showPopUp(
-              context, StateRendererType.POPUP_SUCCESS_STATE, getMessage(),
-              title: AppStrings.success.tr());
+            context: context,
+            stateRendererType: getStateRendererType(),
+            message: getMessage(),
+            resetFlowState: resetFlowState,
+            title: AppStrings.success.tr(),
+          );
           return contentScreenWidget;
         }
       default:
@@ -165,16 +190,26 @@ extension FlowStateExtension on FlowState {
   _isThereCurrentDialogShowing(BuildContext context) =>
       ModalRoute.of(context)?.isCurrent != true;
 
-  showPopUp(
-      BuildContext context, StateRendererType stateRendererType, String message,
-      {String title = EMPTY}) {
-    WidgetsBinding.instance?.addPostFrameCallback((_) => showDialog(
-        context: context,
-        builder: (BuildContext context) => StateRenderer(
-              stateRendererType: stateRendererType,
-              message: message,
-              title: title,
-              retryActionFunction: () {},
-            )));
+  showPopUp({
+    required BuildContext context,
+    required StateRendererType stateRendererType,
+    required String message,
+    required Function resetFlowState,
+    String title = EMPTY,
+  }) {
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) => StateRenderer(
+            stateRendererType: stateRendererType,
+            title: title,
+            message: message,
+            retryActionFunction: () {},
+            resetFlowState: resetFlowState,
+          ),
+        );
+      },
+    );
   }
 }

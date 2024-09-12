@@ -67,6 +67,7 @@ class _LoginViewState extends State<LoginView> {
                     () {
                       _viewModel.login();
                     },
+                    _viewModel.resetFlowState,
                   ) ??
                   _getContentWidget();
             }));

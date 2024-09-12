@@ -77,10 +77,14 @@ class _RegisterViewState extends State<RegisterView> {
           stream: _viewmodel.outputState,
           builder: (context, snapshot) {
             return Center(
-              child: snapshot.data
-                      ?.getScreenWidget(context, _getContentWidget(), () {
-                    _viewmodel.register();
-                  }) ??
+              child: snapshot.data?.getScreenWidget(
+                    context,
+                    _getContentWidget(),
+                    () {
+                      _viewmodel.register();
+                    },
+                    _viewmodel.resetFlowState,
+                  ) ??
                   _getContentWidget(),
             );
           }),

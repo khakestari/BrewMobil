@@ -30,13 +30,15 @@ class StateRenderer extends StatelessWidget {
   String message;
   String title;
   Function? retryActionFunction;
+  Function resetFlowState;
 
   StateRenderer(
       {Key? key,
       required this.stateRendererType,
       String? message,
       String? title,
-      required this.retryActionFunction})
+      required this.retryActionFunction,
+      required this.resetFlowState})
       : message = message ?? AppStrings.loading.tr(),
         title = title ?? EMPTY,
         super(key: key);
@@ -151,6 +153,7 @@ class StateRenderer extends StatelessWidget {
                   print("line 141 pop");
                   Navigator.of(context)
                       .pop(); // popup state error so we need to dismiss the dialog
+                  resetFlowState();
                 }
               },
               child: Text(buttonTitle).tr()),

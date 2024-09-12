@@ -18,7 +18,11 @@ abstract class BaseViewModel extends BaseViewModelInputs
   void dispose() {
     _inputStateStreamController.close();
   }
+
   // shared variables & functions that will be used through any view model.
+  void resetFlowState() {
+    inputState.add(ContentState());
+  }
 }
 
 abstract class BaseViewModelInputs {

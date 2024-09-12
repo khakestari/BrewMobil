@@ -5,7 +5,7 @@ import 'package:advanced_shop_app/presentation/main/home/home_viewmodel.dart';
 import 'package:advanced_shop_app/presentation/resources/color_manager.dart';
 import 'package:advanced_shop_app/presentation/resources/routes_manager.dart';
 import 'package:advanced_shop_app/presentation/resources/values_manager.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+import 'package:carousel_slider/carousel_slider.dart' as slider_controller;
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage> {
               return snapshot.data
                       ?.getScreenWidget(context, _getContentWidgets(), () {
                     _viewModel.start();
-                  }) ??
+                  }, _viewModel.resetFlowState) ??
                   Container();
             }),
       ),
@@ -82,7 +82,7 @@ class _HomePageState extends State<HomePage> {
     if (banners != null) {
       return Padding(
         padding: EdgeInsets.only(top: AppPadding.p12),
-        child: CarouselSlider(
+        child: slider_controller.CarouselSlider(
             items: banners
                 .map((banner) => SizedBox(
                       width: double.infinity,
@@ -103,7 +103,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ))
                 .toList(),
-            options: CarouselOptions(
+            options: slider_controller.CarouselOptions(
               height: AppSize.s190,
               autoPlay: true,
               enableInfiniteScroll: true,
