@@ -149,6 +149,7 @@ class StateRenderer extends StatelessWidget {
                     StateRendererType.FULL_SCREEN_ERROR_STATE) {
                   retryActionFunction
                       ?.call(); // to call the API function again to retry
+                  resetFlowState();
                 } else {
                   print("line 141 pop");
                   Navigator.of(context)
